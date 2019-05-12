@@ -373,11 +373,13 @@ func (this *Client) DdmGetTransactionByHash(txid string) (*BlockTransaction, err
 func (this *Client) ddmGetBlockSpecByBlockNum2(blockNum string, showTransactionSpec bool) (*DdmBlock, error) {
 	params := []interface{}{
 		blockNum,
+
+
 		showTransactionSpec,
 	}
 	var ddmBlock DdmBlock
 
-	result, err := this.Call("ddm_getBlockByHash", 1, params)
+	result, err := this.Call("ddm_getBlockByNumber", 1, params)
 	if err != nil {
 		//errInfo := fmt.Sprintf("get block[%v] failed, err = %v \n", blockNumStr,  err)
 		log.Errorf("get block[%v] failed, err = %v \n", blockNum, err)
