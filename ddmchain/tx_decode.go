@@ -520,7 +520,7 @@ func (this *DdmTransactionDecoder) SignRawTransaction(wrapper openwallet.WalletD
 		this.wm.Log.Error("secp256k1.Sign failed, err=", err)
 		return err
 	}*/
-	sig, err := ddmereum_txsigner.Default.SignTransactionHash(message, keyBytes, owcrypt.ECC_CURVE_SECP256K1)
+	sig, err := ddmchain_txsigner.Default.SignTransactionHash(message, keyBytes, owcrypt.ECC_CURVE_SECP256K1)
 	if err != nil {
 		//errdesc := fmt.Sprintln("signature error, ret:", "0x"+strconv.FormatUint(uint64(ret), 16))
 		//this.wm.Log.Error(errdesc)

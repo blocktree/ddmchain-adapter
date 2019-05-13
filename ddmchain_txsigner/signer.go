@@ -1,4 +1,4 @@
-package ddmereum_txsigner
+package ddmchain_txsigner
 
 import (
 	"fmt"
