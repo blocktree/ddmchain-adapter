@@ -712,12 +712,38 @@ func (this *txFeeInfo) CalcFee() error {
 }
 
 func (this *WalletManager) GetTransactionFeeEstimated(from string, to string, value *big.Int, data string) (*txFeeInfo, error) {
-	gasLimit, err := this.WalletClient.ddmGetGasPrice(makeGasEstimatePara(from, to, value, data))
+	gasLimit := big.NewInt(int64(this.Config.GasLimit))
+	if gasLimit == nil {
+		this.Log.Errorf(fmt.Sprintf("get gas limit failed, err = %v\n", gasLimit))
+		return nil, errors.New("get gas limit failed")
+	}
+
+	gasPrice, err := this.WalletClient.ddmGetGasPriceNoParam()
 	if err != nil {
-		this.Log.Errorf(fmt.Sprintf("get gas limit failed, err = %v\n", err))
+		this.Log.Errorf(fmt.Sprintf("get gas price failed, err = %v\n", err))
 		return nil, err
 	}
 
+	//	fee := new(big.Int)
+	//	fee.Mul(gasLimit, gasPrice)
+
+	feeInfo := &txFeeInfo{
+		GasLimit: gasLimit,
+		GasPrice: gasPrice,
+		//		Fee:      fee,
+	}
+
+	feeInfo.CalcFee()
+	return feeInfo, nil
+}
+
+func (this *WalletManager) GetTransactionFeeERC20Estimated(from string, to string, value *big.Int, data string) (*txFeeInfo, error) {
+	//gasLimit, err := this.WalletClient.ddmGetGasPrice(makeGasEstimatePara(from, to, value, data))
+	//if err != nil {
+	//	this.Log.Errorf(fmt.Sprintf("get gas limit failed, err = %v\n", err))
+	//	return nil, err
+	//}
+	gasLimit := big.NewInt(int64(this.Config.TokenGasLimit))
 	gasPrice, err := this.WalletClient.ddmGetGasPriceNoParam()
 	if err != nil {
 		this.Log.Errorf(fmt.Sprintf("get gas price failed, err = %v\n", err))
@@ -759,7 +785,7 @@ func (this *WalletManager) GetERC20TokenTransactionFeeEstimated(from string, to 
 		Fee:      fee,
 	}
 	return feeInfo, nil*/
-	return this.GetTransactionFeeEstimated(from, to, nil, data)
+	return this.GetTransactionFeeERC20Estimated(from, to, nil, data)
 }
 
 func (this *WalletManager) GetSimpleTransactionFeeEstimated(from string, to string, amount *big.Int) (*txFeeInfo, error) {
