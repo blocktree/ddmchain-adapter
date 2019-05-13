@@ -134,11 +134,11 @@ func TestTransfer_ETH(t *testing.T) {
 	tm := testInitWalletManager()
 	walletID := "WCDPdNNVkUvzHJmFDCTxsPeb5oCq9X2yb2"
 	accountID := "FYxhRfWSR6AXqCfnn94uftwKtvRCiz73opchkzwVATTd"
-	to := "0x38bf8f8dec8e11eec0ca4e2358a61f5eb9c2262b"
+	to := "0xeb826dbf0996ca8a71b1aa2d3acb1f59952b87ca"
 
 	testGetAssetsAccountBalance(tm, walletID, accountID)
 
-	rawTx, err := testCreateTransactionStep(tm, walletID, accountID, to, "0.3", "", nil)
+	rawTx, err := testCreateTransactionStep(tm, walletID, accountID, to, "4", "", nil)
 	if err != nil {
 		return
 	}

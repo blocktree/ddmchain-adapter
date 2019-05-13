@@ -284,7 +284,7 @@ func (this *Client) ddmGetTransactionReceipt(transactionId string) (*DdmTransact
 	}
 
 	var txReceipt DdmTransactionReceipt
-	result, err := this.Call("eth_getTransactionReceipt", 1, params)
+	result, err := this.Call("ddm_getTxReceiptByHash", 1, params)
 	if err != nil {
 		//errInfo := fmt.Sprintf("get block[%v] failed, err = %v \n", blockNumStr,  err)
 		log.Errorf("get tx[%v] receipt failed, err = %v \n", transactionId, err)
