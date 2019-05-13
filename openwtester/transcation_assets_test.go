@@ -204,9 +204,9 @@ func TestTransfer_ERC20(t *testing.T) {
 
 func TestSummary_ETH(t *testing.T) {
 	tm := testInitWalletManager()
-	walletID := "WHSh1o6SavEya1Y3t1nGPUiEDbr7WBMffm"
-	accountID := "Axm3ihzw9Rmpf1L7ciHjdyET3uyHexSNzFq3s7p8n2uS"
-	summaryAddress := "0xb722ea468a210918c95cf7a02a44d0e28f614e1f"
+	walletID := "WCDPdNNVkUvzHJmFDCTxsPeb5oCq9X2yb2"
+	accountID := "FYxhRfWSR6AXqCfnn94uftwKtvRCiz73opchkzwVATTd"
+	summaryAddress := "0xeb826dbf0996ca8a71b1aa2d3acb1f59952b87ca"
 
 	testGetAssetsAccountBalance(tm, walletID, accountID)
 
