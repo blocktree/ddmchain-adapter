@@ -30,7 +30,7 @@ func (this *AddrBalance) GetAddress() string {
 }
 
 func (this *AddrBalance) ValidTokenBalance() bool {
-	if this.Balance == nil {
+	if this.TokenBalance == nil {
 		return false
 	}
 	return true

@@ -513,7 +513,7 @@ func (this *Client) ERC20GetAddressBalance2(address string, contractAddr string,
 		trans,
 		"latest",
 	}
-	result, err := this.Call("eth_call", 1, params)
+	result, err := this.Call("ddm_call", 1, params)
 	if err != nil {
 		log.Errorf(fmt.Sprintf("get addr[%v] erc20 balance failed, err=%v\n", address, err))
 		return big.NewInt(0), err

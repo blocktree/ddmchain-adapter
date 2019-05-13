@@ -113,6 +113,8 @@ type WalletConfig struct {
 	//是否完全依靠本地维护nonce
 	LocalNonce bool
 	ChainID    uint64
+	GasLimit   uint64
+	TokenGasLimit   uint64
 }
 
 
@@ -146,6 +148,27 @@ func (this *WalletManager) LoadAssetsConfig(c config.Configer) error {
 		log.Error("ChainID error, err=", err)
 		return err
 	}
+	//gasLimit
+	gasLimit, err := c.Int64("GasLimit")
+	if err != nil {
+		//log.Error("gasLimit error, err=", err)
+	}
+	//gasLimit
+	gasTokenLimit, err := c.Int64("GasTokenLimit")
+	if err != nil {
+		//log.Error("gasTokenLimit error, err=", err)
+	}
+	if gasLimit !=0 {
+		this.Config.GasLimit = uint64(gasLimit)
+	}else{
+		this.Config.GasLimit = 21000
+	}
+	if gasTokenLimit !=0 {
+		this.Config.TokenGasLimit = uint64(gasTokenLimit)
+	}else{
+		this.Config.TokenGasLimit = 50000
+	}
+	this.Config.TokenGasLimit = uint64(gasTokenLimit)
 	this.Config.ChainID = uint64(chainId) //c.Int64("ChainID") //12
 	this.Config.ServerAPI = c.String("ServerAPI")
 	//this.StorageOld = keystore.NewHDKeystore(this.Config.KeyDir, keystore.StandardScryptN, keystore.StandardScryptP)
@@ -233,6 +256,29 @@ func (this *WalletConfig) LoadConfig(configFilePath string, configFileName strin
 		return nil, err
 	}
 	this.ChainID = uint64(chainId) //c.Int64("ChainID") //12
+
+
+	//gasLimit
+	gasLimit, err := c.Int64("GasLimit")
+	if err != nil {
+		//log.Error("gasLimit error, err=", err)
+	}
+	//gasLimit
+	gasTokenLimit, err := c.Int64("GasTokenLimit")
+	if err != nil {
+		//log.Error("gasTokenLimit error, err=", err)
+	}
+	if gasLimit !=0 {
+		this.GasLimit = uint64(gasLimit)
+	}else{
+		this.GasLimit = 21000
+	}
+	if gasTokenLimit !=0 {
+		this.TokenGasLimit = uint64(gasTokenLimit)
+	}else{
+		this.TokenGasLimit = 50000
+	}
+
 	return this, nil
 }
 

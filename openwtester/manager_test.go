@@ -1,6 +1,7 @@
 package openwtester
 
 import (
+	"fmt"
 	"github.com/blocktree/openwallet/log"
 	"github.com/blocktree/openwallet/openw"
 	"github.com/blocktree/openwallet/openwallet"
@@ -111,7 +112,7 @@ func TestWalletManager_CreateAddress(t *testing.T) {
 	tm := testInitWalletManager()
 
 	walletID := "WCDPdNNVkUvzHJmFDCTxsPeb5oCq9X2yb2"
-	accountID := "FYxhRfWSR6AXqCfnn94uftwKtvRCiz73opchkzwVATTd"
+	accountID := "2itC8V6c3J1KoWiqPFN9sHyo7WzLKYoT1fakzAF1e2NR"
 	address, err := tm.CreateAddress(testApp, walletID, accountID, 5)
 	if err != nil {
 		log.Error(err)
@@ -119,8 +120,8 @@ func TestWalletManager_CreateAddress(t *testing.T) {
 	}
 
 	log.Info("address:", address)
-	for k,v := range address{
-		log.Info("address:",k,":", v.Address)
+	for _,v := range address{
+		fmt.Println(v.Address)
 	}
 
 	tm.CloseDB(testApp)
@@ -130,8 +131,8 @@ func TestWalletManager_GetAddressList(t *testing.T) {
 
 	tm := testInitWalletManager()
 
-	walletID := "WCDPdNNVkUvzHJmFDCTxsPeb5oCq9X2yb2"
-	accountID := "FYxhRfWSR6AXqCfnn94uftwKtvRCiz73opchkzwVATTd"
+	walletID := "WAQKBtF9AqAHM8ifFN4AnqQXYrE4QMyQ3t"
+	accountID := "EG8kqqHtQLt4KBMog6mSPDt2i5fKirJ7sB8bduwu3ke5"
 	list, err := tm.GetAddressList(testApp, walletID, accountID, 0, -1, false)
 	if err != nil {
 		log.Error("unexpected error:", err)

@@ -411,7 +411,7 @@ func (this *DdmTransactionDecoder) CreateErc20TokenRawTransaction(wrapper openwa
 
 		//this.wm.Log.Debug("sumAmount:", sumAmount)
 		//计算手续费
-		fee, createErr := this.wm.GetTransactionFeeEstimated(addrBalance.Balance.Address, contractAddress, nil, data)
+		fee, createErr := this.wm.GetTransactionFeeERC20Estimated(addrBalance.Balance.Address, contractAddress, nil, data)
 		if createErr != nil {
 			this.wm.Log.Std.Error("GetTransactionFeeEstimated from[%v] -> to[%v] failed, err=%v", addrBalance.Balance.Address, to, createErr)
 			return createErr
@@ -1093,7 +1093,7 @@ func (this *DdmTransactionDecoder) CreateErc20TokenSummaryRawTransaction(wrapper
 
 		//this.wm.Log.Debug("sumAmount:", sumAmount)
 		//计算手续费
-		fee, createErr := this.wm.GetTransactionFeeEstimated(addrBalance.Balance.Address, contractAddress, nil, callData)
+		fee, createErr := this.wm.GetTransactionFeeERC20Estimated(addrBalance.Balance.Address, contractAddress, nil, callData)
 		if createErr != nil {
 			this.wm.Log.Std.Error("GetTransactionFeeEstimated from[%v] -> to[%v] failed, err=%v", addrBalance.Balance.Address, sumRawTx.SummaryAddress, createErr)
 			return nil, createErr
