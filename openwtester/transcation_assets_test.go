@@ -132,8 +132,8 @@ func TestAccountBalance(t *testing.T) {
 
 func TestTransfer_ETH(t *testing.T) {
 	tm := testInitWalletManager()
-	walletID := "WCDPdNNVkUvzHJmFDCTxsPeb5oCq9X2yb2"
-	accountID := "FYxhRfWSR6AXqCfnn94uftwKtvRCiz73opchkzwVATTd"
+	walletID := "WAQKBtF9AqAHM8ifFN4AnqQXYrE4QMyQ3t"
+	accountID := "EG8kqqHtQLt4KBMog6mSPDt2i5fKirJ7sB8bduwu3ke5"
 	to := "0xeb826dbf0996ca8a71b1aa2d3acb1f59952b87ca"
 
 	testGetAssetsAccountBalance(tm, walletID, accountID)

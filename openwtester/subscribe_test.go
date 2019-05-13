@@ -52,11 +52,11 @@ func (sub *subscriberSingle) BlockExtractDataNotify(sourceKey string, data *open
 	return nil
 }
 
-func TestSubscribeAddress_ETH(t *testing.T) {
+func TestSubscribeAddress(t *testing.T) {
 
 	var (
 		endRunning = make(chan bool, 1)
-		symbol     = "ETH"
+		symbol     = "DDM"
 		accountID  = "HgRBsaiKgoVDagwezos496vqKQCh41pY44JbhW65YA8t"
 		addrs      = map[string]string{
 			"0x0bafa25466ab8e411480fcedb3117ff4d07c0271": accountID,
