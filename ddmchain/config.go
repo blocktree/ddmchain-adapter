@@ -115,6 +115,8 @@ type WalletConfig struct {
 	ChainID    uint64
 	GasLimit   uint64
 	TokenGasLimit   uint64
+	//数据目录
+	DataDir string
 }
 
 
@@ -129,7 +131,7 @@ func NewConfig(symbol string) *WalletConfig {
 	c.DbPath = filepath.Join("data", strings.ToLower(c.Symbol), "db")
 	c.ConfigFileName = c.Symbol + ".ini"
 	//创建目录
-	file.MkdirAll(c.DbPath)
+	//file.MkdirAll(c.DbPath)
 
 	return &c
 }
@@ -176,6 +178,10 @@ func (this *WalletManager) LoadAssetsConfig(c config.Configer) error {
 	//this.Storage = storage
 	client := &Client{BaseURL: this.Config.ServerAPI, Debug: false}
 	this.WalletClient = client
+	this.Config.DataDir = c.String("dataDir")
+
+	//数据文件夹
+	this.Config.makeDataDir()
 	return nil
 }
 
@@ -317,4 +323,21 @@ func (this *WalletManager) InitConfigFlow() error {
 //查看配置信息
 func (wm *WalletManager) ShowConfig() error {
 	return wm.PrintConfig()
+}
+
+
+
+//创建文件夹
+func (wc *WalletConfig) makeDataDir() {
+
+	if len(wc.DataDir) == 0 {
+		//默认路径当前文件夹./data
+		wc.DataDir = "data"
+	}
+
+	//本地数据库文件路径
+	wc.DbPath = filepath.Join(wc.DataDir, strings.ToLower(wc.Symbol), "db")
+
+	//创建目录
+	file.MkdirAll(wc.DbPath)
 }
