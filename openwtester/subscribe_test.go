@@ -52,14 +52,15 @@ func (sub *subscriberSingle) BlockExtractDataNotify(sourceKey string, data *open
 	return nil
 }
 
-func TestSubscribeAddress_ETH(t *testing.T) {
+func TestSubscribeAddress(t *testing.T) {
 
 	var (
 		endRunning = make(chan bool, 1)
-		symbol     = "ETH"
-		accountID  = "HgRBsaiKgoVDagwezos496vqKQCh41pY44JbhW65YA8t"
+		symbol     = "DDM"
+		//accountID  = "HgRBsaiKgoVDagwezos496vqKQCh41pY44JbhW65YA8t"
 		addrs      = map[string]string{
-			"0x0bafa25466ab8e411480fcedb3117ff4d07c0271": accountID,
+			"0xa6e2e4f52851864bc2e783103f1067a0bf7d13e3": "sender",
+			"0x5be7747b0752ba0e96d38634df72647db01c3e94": "receiver",
 		}
 	)
 
@@ -96,7 +97,7 @@ func TestSubscribeAddress_ETH(t *testing.T) {
 
 	//log.Debug("already got scanner:", assetsMgr)
 	scanner := assetsMgr.GetBlockScanner()
-	//scanner.SetRescanBlockHeight(6518561)
+	scanner.SetRescanBlockHeight(2487274)
 
 	if scanner == nil {
 		log.Error(symbol, "is not support block scan")

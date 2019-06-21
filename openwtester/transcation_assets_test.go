@@ -130,15 +130,25 @@ func TestAccountBalance(t *testing.T) {
 	testGetAssetsAccountBalance(tm, walletID, accountID)
 }
 
-func TestTransfer_ETH(t *testing.T) {
+func TestTransfer(t *testing.T) {
+
+	//0x337dab81e24d916383409a7861e2ea9f46e3c94c
+	//0x05159cfa87d8f0ad32b8589680598fe5a7884e78
+	//0xa6e2e4f52851864bc2e783103f1067a0bf7d13e3
+	//0x9f8d6babb0b28448027c9485c9e4f8b2049f6573
+	//0x99b44df54026cf960ee51541b5e648418fda7290
+
 	tm := testInitWalletManager()
-	walletID := "WCDPdNNVkUvzHJmFDCTxsPeb5oCq9X2yb2"
-	accountID := "FYxhRfWSR6AXqCfnn94uftwKtvRCiz73opchkzwVATTd"
-	to := "0xeb826dbf0996ca8a71b1aa2d3acb1f59952b87ca"
+	walletID := "WAQKBtF9AqAHM8ifFN4AnqQXYrE4QMyQ3t"
+	accountID := "EG8kqqHtQLt4KBMog6mSPDt2i5fKirJ7sB8bduwu3ke5"
+	to := "0x99b44df54026cf960ee51541b5e648418fda7290"
+
+	//accountID := "2itC8V6c3J1KoWiqPFN9sHyo7WzLKYoT1fakzAF1e2NR"
+	//to := "0x5be7747b0752ba0e96d38634df72647db01c3e94"
 
 	testGetAssetsAccountBalance(tm, walletID, accountID)
 
-	rawTx, err := testCreateTransactionStep(tm, walletID, accountID, to, "4", "", nil)
+	rawTx, err := testCreateTransactionStep(tm, walletID, accountID, to, "0.04", "", nil)
 	if err != nil {
 		return
 	}
@@ -202,11 +212,14 @@ func TestTransfer_ERC20(t *testing.T) {
 
 }
 
-func TestSummary_ETH(t *testing.T) {
+func TestSummary(t *testing.T) {
 	tm := testInitWalletManager()
-	walletID := "WCDPdNNVkUvzHJmFDCTxsPeb5oCq9X2yb2"
-	accountID := "FYxhRfWSR6AXqCfnn94uftwKtvRCiz73opchkzwVATTd"
-	summaryAddress := "0xeb826dbf0996ca8a71b1aa2d3acb1f59952b87ca"
+	walletID := "WAQKBtF9AqAHM8ifFN4AnqQXYrE4QMyQ3t"
+	//accountID := "EG8kqqHtQLt4KBMog6mSPDt2i5fKirJ7sB8bduwu3ke5"
+	//summaryAddress := "0x2623de7edc1b7da05e50999b5aec8daccddc8c63"
+
+	accountID := "2itC8V6c3J1KoWiqPFN9sHyo7WzLKYoT1fakzAF1e2NR"
+	summaryAddress := "0x5be7747b0752ba0e96d38634df72647db01c3e94"
 
 	testGetAssetsAccountBalance(tm, walletID, accountID)
 
