@@ -139,9 +139,9 @@ func TestTransfer(t *testing.T) {
 	//0x99b44df54026cf960ee51541b5e648418fda7290
 
 	tm := testInitWalletManager()
-	walletID := "WAQKBtF9AqAHM8ifFN4AnqQXYrE4QMyQ3t"
-	accountID := "EG8kqqHtQLt4KBMog6mSPDt2i5fKirJ7sB8bduwu3ke5"
-	to := "0x99b44df54026cf960ee51541b5e648418fda7290"
+	walletID := "W4YTgWJStk4XDe65QRCFCoHcFBvUDR1HtT"
+	accountID := "3TiygjkvHv8oSvPYWxwXhuY9G36zW6oqG37mgKM9xskL"
+	to := "0x77816b7a8315a540dd0129da44705b5d0fa33f96"
 
 	//accountID := "2itC8V6c3J1KoWiqPFN9sHyo7WzLKYoT1fakzAF1e2NR"
 	//to := "0x5be7747b0752ba0e96d38634df72647db01c3e94"

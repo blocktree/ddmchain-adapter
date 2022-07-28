@@ -847,28 +847,23 @@ func (this *DdmTransactionDecoder) SubmitRawTransaction(wrapper openwallet.Walle
 }
 
 //VerifyRawTransaction 验证交易单，验证交易单并返回加入签名后的交易单
-func (this *DdmTransactionDecoder) VerifyRawTransaction(wrapper openwallet.WalletDAI, rawTx *openwallet.RawTransaction) error {
+func (decoder *DdmTransactionDecoder) VerifyRawTransaction(wrapper openwallet.WalletDAI, rawTx *openwallet.RawTransaction) error {
 	//check交易交易单基本字段
-	err := VerifyRawTransaction(rawTx)
-	if err != nil {
-		this.wm.Log.Std.Error("Verify raw tx failed, err=%v", err)
-		return err
-	}
 
 	if rawTx.Signatures == nil || len(rawTx.Signatures) == 0 {
-		//this.wm.Log.Std.Error("len of signatures error. ")
+		//decoder.wm.Log.Std.Error("len of signatures error. ")
 		return openwallet.Errorf(openwallet.ErrVerifyRawTransactionFailed, "transaction signature is empty")
 	}
 
 	accountSig, exist := rawTx.Signatures[rawTx.Account.AccountID]
 	if !exist {
-		this.wm.Log.Std.Error("wallet[%v] signature not found ", rawTx.Account.AccountID)
+		decoder.wm.Log.Std.Error("wallet[%v] signature not found ", rawTx.Account.AccountID)
 		return errors.New("wallet signature not found ")
 	}
 
 	if len(accountSig) == 0 {
-		//this.wm.Log.Std.Error("len of signatures error. ")
-		return openwallet.Errorf(openwallet.ErrVerifyRawTransactionFailed,"transaction signature is empty")
+		//decoder.wm.Log.Std.Error("len of signatures error. ")
+		return openwallet.Errorf(openwallet.ErrVerifyRawTransactionFailed, "transaction signature is empty")
 	}
 
 	sig := accountSig[0].Signature
@@ -876,17 +871,16 @@ func (this *DdmTransactionDecoder) VerifyRawTransaction(wrapper openwallet.Walle
 	pubkey := accountSig[0].Address.PublicKey
 	//curveType := rawTx.Signatures[rawTx.Account.AccountID][0].EccType
 
-	this.wm.Log.Debug("-- pubkey:", pubkey)
-	this.wm.Log.Debug("-- message:", msg)
-	this.wm.Log.Debug("-- Signature:", sig)
+	decoder.wm.Log.Debug("-- pubkey:", pubkey)
+	decoder.wm.Log.Debug("-- message:", msg)
+	decoder.wm.Log.Debug("-- Signature:", sig)
 	signature := ethcommon.FromHex(sig)
 	publickKey := owcrypt.PointDecompress(ethcommon.FromHex(pubkey), owcrypt.ECC_CURVE_SECP256K1)
 	publickKey = publickKey[1:len(publickKey)]
-	ret := owcrypt.Verify(publickKey, nil,  ethcommon.FromHex(msg), signature[0:len(signature)-1],
-		owcrypt.ECC_CURVE_SECP256K1|owcrypt.HASH_OUTSIDE_FLAG)
+	ret := owcrypt.Verify(publickKey, nil, ethcommon.FromHex(msg), signature[0:len(signature)-1], owcrypt.ECC_CURVE_SECP256K1)
 	if ret != owcrypt.SUCCESS {
 		errinfo := fmt.Sprintf("verify error, ret:%v\n", "0x"+strconv.FormatUint(uint64(ret), 16))
-		fmt.Println(errinfo)
+		//fmt.Println(errinfo)
 		return errors.New(errinfo)
 	}
 
