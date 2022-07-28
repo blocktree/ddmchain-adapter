@@ -82,6 +82,8 @@ func TestWalletManager_CreateAssetsAccount(t *testing.T) {
 		return
 	}
 
+//account: 9ZQJNqbwxqNtqmLa1XR2YifWiCkGNSfYrxzcDmkLQvzS
+// address: 0x370114746d48f393d03df42371da6ffb3a5c24c3
 	log.Info("account:", account.AccountID)
 	log.Info("address:", address.Address)
 

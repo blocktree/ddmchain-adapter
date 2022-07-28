@@ -19,7 +19,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/blocktree/ddmchain-adapter/ddmchain_txsigner"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/rlp"
 	"github.com/shopspring/decimal"
@@ -467,34 +466,25 @@ func (this *DdmTransactionDecoder) CreateRawTransaction(wrapper openwallet.Walle
 }
 
 //SignRawTransaction 签名交易单
-func (this *DdmTransactionDecoder) SignRawTransaction(wrapper openwallet.WalletDAI, rawTx *openwallet.RawTransaction) error {
-
-	//check交易交易单基本字段
-	err := VerifyRawTransaction(rawTx)
-	if err != nil {
-		this.wm.Log.Std.Error("Verify raw tx failed, err=%v", err)
-		return err
-	}
-
+func (decoder *DdmTransactionDecoder) SignRawTransaction(wrapper openwallet.WalletDAI, rawTx *openwallet.RawTransaction) error {
 	if rawTx.Signatures == nil || len(rawTx.Signatures) == 0 {
-		//this.wm.Log.Std.Error("len of signatures error. ")
-		return openwallet.Errorf(openwallet.ErrSignRawTransactionFailed,"transaction signature is empty")
+		return openwallet.Errorf(openwallet.ErrSignRawTransactionFailed, "transaction signature is empty")
 	}
 
 	key, err := wrapper.HDKey()
 	if err != nil {
-		this.wm.Log.Error("get HDKey from wallet wrapper failed, err=%v", err)
+		decoder.wm.Log.Error("get HDKey from wallet wrapper failed, err=%v", err)
 		return err
 	}
 
 	if _, exist := rawTx.Signatures[rawTx.Account.AccountID]; !exist {
-		this.wm.Log.Std.Error("wallet[%v] signature not found ", rawTx.Account.AccountID)
-		return openwallet.Errorf(openwallet.ErrSignRawTransactionFailed,"wallet signature not found ")
+		decoder.wm.Log.Std.Error("wallet[%v] signature not found ", rawTx.Account.AccountID)
+		return openwallet.Errorf(openwallet.ErrSignRawTransactionFailed, "wallet signature not found ")
 	}
 
 	if len(rawTx.Signatures[rawTx.Account.AccountID]) != 1 {
-		this.wm.Log.Error("signature failed in account[%v].", rawTx.Account.AccountID)
-		return openwallet.Errorf(openwallet.ErrSignRawTransactionFailed,"signature failed in account.")
+		decoder.wm.Log.Error("signature failed in account[%v].", rawTx.Account.AccountID)
+		return openwallet.Errorf(openwallet.ErrSignRawTransactionFailed, "signature failed in account.")
 	}
 
 	signnode := rawTx.Signatures[rawTx.Account.AccountID][0]
@@ -503,35 +493,22 @@ func (this *DdmTransactionDecoder) SignRawTransaction(wrapper openwallet.WalletD
 	childKey, _ := key.DerivedKeyWithPath(fromAddr.HDPath, owcrypt.ECC_CURVE_SECP256K1)
 	keyBytes, err := childKey.GetPrivateKeyBytes()
 	if err != nil {
-		this.wm.Log.Error("get private key bytes, err=", err)
 		return openwallet.NewError(openwallet.ErrSignRawTransactionFailed, err.Error())
 	}
-	//prikeyStr := common.ToHex(keyBytes)
-	//this.wm.Log.Debugf("pri:%v", common.ToHex(keyBytes))
 
 	message, err := hex.DecodeString(signnode.Message)
 	if err != nil {
 		return err
 	}
-	//seckey := math.PaddedBigBytes(key.PrivateKey.D, key.PrivateKey.Params().BitSize/8)
 
-	/*sig, err := secp256k1.Sign(message, keyBytes)
-	if err != nil {
-		this.wm.Log.Error("secp256k1.Sign failed, err=", err)
-		return err
-	}*/
-	sig, err := ddmchain_txsigner.Default.SignTransactionHash(message, keyBytes, owcrypt.ECC_CURVE_SECP256K1)
-	if err != nil {
-		//errdesc := fmt.Sprintln("signature error, ret:", "0x"+strconv.FormatUint(uint64(ret), 16))
-		//this.wm.Log.Error(errdesc)
-		return err
+	signature, v, sigErr := owcrypt.Signature(keyBytes, nil, message, decoder.wm.CurveType())
+	if sigErr != owcrypt.SUCCESS {
+		return fmt.Errorf("transaction hash sign failed")
 	}
+	signature = append(signature, v)
 
-	signnode.Signature = hex.EncodeToString(sig)
+	signnode.Signature = hex.EncodeToString(signature)
 
-	//this.wm.Log.Debug("** pri:", hex.EncodeToString(keyBytes))
-	this.wm.Log.Debug("** message:", signnode.Message)
-	this.wm.Log.Debug("** Signature:", signnode.Signature)
 
 	return nil
 }
@@ -1336,6 +1313,7 @@ func (this *DdmTransactionDecoder) createRawTransaction(wrapper openwallet.Walle
 		Nonce:   "0x" + strconv.FormatUint(nonce, 16),
 		Address: addr,
 		Message: hex.EncodeToString(msg[:]),
+		RSV:     true,
 	}
 	keySignList = append(keySignList, &signature)
 
