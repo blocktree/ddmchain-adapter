@@ -2,3 +2,5 @@ ddmchain-adapter.iml
 */conf/*
 */data*
 */openw_data/*
+.gitignore
+runConfigurations.xml

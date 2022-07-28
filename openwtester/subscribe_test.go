@@ -17,9 +17,9 @@ package openwtester
 
 import (
 	"github.com/astaxie/beego/config"
-	"github.com/blocktree/openwallet/log"
-	"github.com/blocktree/openwallet/openw"
-	"github.com/blocktree/openwallet/openwallet"
+	"github.com/blocktree/openwallet/v2/log"
+	"github.com/blocktree/openwallet/v2/openw"
+	"github.com/blocktree/openwallet/v2/openwallet"
 	"path/filepath"
 	"testing"
 )
@@ -51,7 +51,18 @@ func (sub *subscriberSingle) BlockExtractDataNotify(sourceKey string, data *open
 
 	return nil
 }
+//BlockExtractSmartContractDataNotify 区块提取智能合约交易结果通知
+func (sub *subscriberSingle) BlockExtractSmartContractDataNotify(sourceKey string, data *openwallet.SmartContractReceipt) error {
 
+	log.Notice("sourceKey:", sourceKey)
+	log.Std.Notice("data.ContractTransaction: %+v", data)
+
+	for i, event := range data.Events {
+		log.Std.Notice("data.Events[%d]: %+v", i, event)
+	}
+
+	return nil
+}
 func TestSubscribeAddress(t *testing.T) {
 
 	var (
@@ -97,7 +108,7 @@ func TestSubscribeAddress(t *testing.T) {
 
 	//log.Debug("already got scanner:", assetsMgr)
 	scanner := assetsMgr.GetBlockScanner()
-	scanner.SetRescanBlockHeight(2487274)
+	scanner.SetRescanBlockHeight(22722200)
 
 	if scanner == nil {
 		log.Error(symbol, "is not support block scan")

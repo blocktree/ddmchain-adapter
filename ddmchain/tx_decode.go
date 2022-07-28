@@ -34,7 +34,7 @@ import (
 	"time"
 
 	"github.com/blocktree/go-owcrypt"
-	"github.com/blocktree/openwallet/openwallet"
+	"github.com/blocktree/openwallet/v2/openwallet"
 	ethcommon "github.com/ethereum/go-ethereum/common"
 	//"github.com/ethereum/go-ethereum/core/types"
 	//"github.com/ethereum/go-ethereum/rlp"
@@ -882,7 +882,7 @@ func (this *DdmTransactionDecoder) VerifyRawTransaction(wrapper openwallet.Walle
 	signature := ethcommon.FromHex(sig)
 	publickKey := owcrypt.PointDecompress(ethcommon.FromHex(pubkey), owcrypt.ECC_CURVE_SECP256K1)
 	publickKey = publickKey[1:len(publickKey)]
-	ret := owcrypt.Verify(publickKey, nil, 0, ethcommon.FromHex(msg), 32, signature[0:len(signature)-1],
+	ret := owcrypt.Verify(publickKey, nil,  ethcommon.FromHex(msg), signature[0:len(signature)-1],
 		owcrypt.ECC_CURVE_SECP256K1|owcrypt.HASH_OUTSIDE_FLAG)
 	if ret != owcrypt.SUCCESS {
 		errinfo := fmt.Sprintf("verify error, ret:%v\n", "0x"+strconv.FormatUint(uint64(ret), 16))

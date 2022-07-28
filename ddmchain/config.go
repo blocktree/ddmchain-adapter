@@ -25,8 +25,8 @@ import (
 
 	"github.com/astaxie/beego/config"
 	"github.com/blocktree/go-owcrypt"
-	"github.com/blocktree/openwallet/common/file"
-	"github.com/blocktree/openwallet/log"
+	"github.com/blocktree/openwallet/v2/common/file"
+	"github.com/blocktree/openwallet/v2/log"
 )
 
 const (
@@ -117,6 +117,8 @@ type WalletConfig struct {
 	TokenGasLimit   uint64
 	//数据目录
 	DataDir string
+
+
 }
 
 

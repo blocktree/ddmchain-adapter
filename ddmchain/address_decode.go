@@ -3,10 +3,21 @@ package ddmchain
 import (
 	"github.com/blocktree/go-owcdrivers/addressEncoder"
 	owcrypt "github.com/blocktree/go-owcrypt"
+	"github.com/blocktree/openwallet/v2/openwallet"
 )
 
-//AddressDecoder 地址解析器
-type AddressDecoder struct{}
+
+//AddressDecoderV2
+type AddressDecoder struct {
+	*openwallet.AddressDecoderV2Base
+}
+
+//NewAddressDecoder 地址解析器
+func NewAddressDecoderV2() *AddressDecoder {
+	decoder := AddressDecoder{}
+	return &decoder
+}
+
 
 //PrivateKeyToWIF 私钥转WIF
 func (decoder *AddressDecoder) PrivateKeyToWIF(priv []byte, isTestnet bool) (string, error) {

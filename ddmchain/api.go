@@ -27,9 +27,9 @@ import (
 
 	"time"
 
-	tool "github.com/blocktree/openwallet/common"
-	"github.com/blocktree/openwallet/log"
-	"github.com/blocktree/openwallet/openwallet"
+	tool "github.com/blocktree/openwallet/v2/common"
+	"github.com/blocktree/openwallet/v2/log"
+	"github.com/blocktree/openwallet/v2/openwallet"
 
 	"github.com/imroc/req"
 	"github.com/tidwall/gjson"

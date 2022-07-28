@@ -17,12 +17,12 @@ package openwtester
 
 import (
 	"github.com/astaxie/beego/config"
-	"github.com/blocktree/openwallet/openw"
+	"github.com/blocktree/openwallet/v2/openw"
 	"path/filepath"
 	"testing"
 
-	"github.com/blocktree/openwallet/log"
-	"github.com/blocktree/openwallet/openwallet"
+	"github.com/blocktree/openwallet/v2/log"
+	"github.com/blocktree/openwallet/v2/openwallet"
 )
 
 func TestWalletManager_GetTransactions(t *testing.T) {
@@ -169,7 +169,7 @@ func TestGetAddressBalance(t *testing.T) {
 
 	addrs := []string{
 		//"0xb722ea468a210918c95cf7a02a44d0e28f614e1f",
-		"0x350d453be1aab3d719b8763783889c4105d40583",
+		"0x56711e9b8fd38eb3688b7429d33240251f368d62",
 		//"ARAA8AnUYa4kWwWkiZTTyztG5C6S9MFTx11",
 		//"ARCUYWyLvGDTrhZ6K9jjMh9B5iRVEf3vRzs",
 		//"ARGehumz77nGcfkQrPjK4WUyNevvU9NCNqQ",

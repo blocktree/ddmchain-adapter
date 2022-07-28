@@ -20,14 +20,14 @@ package ddmchain
 //3. block height, block hash
 
 import (
-	"github.com/blocktree/openwallet/common"
+	"github.com/blocktree/openwallet/v2/common"
 	"math/big"
 	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/asdine/storm"
-	"github.com/blocktree/openwallet/openwallet"
+	"github.com/blocktree/openwallet/v2/openwallet"
 
 	//	"fmt"
 	"errors"

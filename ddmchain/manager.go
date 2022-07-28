@@ -37,11 +37,11 @@ import (
 
 	"github.com/blocktree/go-owcdrivers/owkeychain"
 	"github.com/blocktree/go-owcrypt"
-	"github.com/blocktree/openwallet/common"
-	"github.com/blocktree/openwallet/common/file"
-	"github.com/blocktree/openwallet/hdkeystore"
-	"github.com/blocktree/openwallet/log"
-	"github.com/blocktree/openwallet/openwallet"
+	"github.com/blocktree/openwallet/v2/common"
+	"github.com/blocktree/openwallet/v2/common/file"
+	"github.com/blocktree/openwallet/v2/hdkeystore"
+	"github.com/blocktree/openwallet/v2/log"
+	"github.com/blocktree/openwallet/v2/openwallet"
 )
 
 const (
@@ -113,7 +113,7 @@ func NewWalletManager() *WalletManager {
 	//wm.WalletsInSum = make(map[string]*openwallet.Wallet)
 	//区块扫描器
 	wm.Blockscanner = NewDDMBlockScanner(&wm)
-	wm.Decoder = &AddressDecoder{}
+	wm.Decoder = NewAddressDecoderV2()
 	wm.TxDecoder = NewTransactionDecoder(&wm)
 
 	//wm.NewConfig(wm.RootPath, MasterKey)
